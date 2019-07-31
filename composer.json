@@ -1,5 +1,5 @@
 {
-    "name": "fmizzell/sql-parser",
+    "name": "getdkan/sql-parser",
     "description": "A state-machine-driven parser and validator for SQL-like strings.",
     "license": "GPL-3.0-only",
     "authors": [
