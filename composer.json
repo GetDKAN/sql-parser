@@ -13,7 +13,8 @@
     },
     "autoload": {
         "psr-4": {
-            "SqlParser\\": "src/"
+            "SqlParser\\": "src/",
+            "SqlParserTest\\": "src/"
         }
     },
     "require-dev": {
