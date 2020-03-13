@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "fmizzell/maquina": "~1.0.0"
+        "fmizzell/maquina": "^1.0.0"
     },
     "autoload": {
         "psr-4": {
