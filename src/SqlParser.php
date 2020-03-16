@@ -162,12 +162,12 @@ class SqlParser
         $machine->addEndState("end");
 
         $machine->addMachine('string', mb::bh(
-            self::COLUMN_OR_TABLE_CHARS . ' \\",.;:?!+-*/^=(){}[]<>`@~#$%&|',
+            self::COLUMN_OR_TABLE_CHARS . " '\\,.;:?!+-*/^=(){}[]<>`@~#$%&|",
             mb::ONE_OR_MORE
         ));
 
-        $machine->addTransition('start', ["'"], "string");
-        $machine->addTransition('string', ["'"], "end");
+        $machine->addTransition('start', ['"'], "string");
+        $machine->addTransition('string', ['"'], "end");
 
         return $machine;
     }
