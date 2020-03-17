@@ -14,6 +14,8 @@ class SqlParser
 {
 
     private $stateMachine;
+    const ALPHANUM = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const COLUMN_OR_TABLE_CHARS = self::ALPHANUM . '_-';
 
   /**
    * Static call for backward compatibility.
@@ -97,18 +99,21 @@ class SqlParser
    */
     protected function getSelectMachine()
     {
-        $alphanumeric = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $acceptable_for_vars = $alphanumeric . "-_";
-
         $machine = $this->newMachineOfMachine('select_start');
         $machine->addEndState("table_var");
 
         $machine->addMachine('select_start', mb::s('SELECT'));
         $machine->addMachine('select_var_all', mb::s("*"));
         $machine->addMachine('select_count_all', mb::s("COUNT(*)"));
-        $machine->addMachine('select_var', mb::bh($acceptable_for_vars, mb::ONE_OR_MORE));
+        $machine->addMachine('select_var', mb::bh(
+            self::COLUMN_OR_TABLE_CHARS,
+            mb::ONE_OR_MORE
+        ));
         $machine->addMachine('select_from', mb::s('FROM'));
-        $machine->addMachine('table_var', mb::bh($acceptable_for_vars, mb::ONE_OR_MORE));
+        $machine->addMachine('table_var', mb::bh(
+            self::COLUMN_OR_TABLE_CHARS,
+            mb::ONE_OR_MORE
+        ));
 
         $machine->addTransition('select_start', [" "], "select_var");
         $machine->addTransition('select_start', [" "], "select_var_all");
@@ -131,10 +136,10 @@ class SqlParser
         $machine->addEndState("quoted_string");
 
         $machine->addMachine('where_start', mb::s('WHERE'));
-        $machine->addMachine(
-            'where_column',
-            mb::bh('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_', mb::ONE_OR_MORE)
-        );
+        $machine->addMachine('where_column', mb::bh(
+            self::COLUMN_OR_TABLE_CHARS,
+            mb::ONE_OR_MORE
+        ));
         $machine->addMachine("equal", mb::bh("=", mb::ONE_OR_MORE));
         $machine->addMachine("quoted_string", self::getQuotedStringMachine());
         $machine->addMachine("and", mb::s("AND"));
@@ -156,13 +161,13 @@ class SqlParser
         $machine = $this->newMachineOfMachine('start');
         $machine->addEndState("end");
 
-        $machine->addMachine(
-            'string',
-            mb::bh('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ %$.', mb::ONE_OR_MORE)
-        );
+        $machine->addMachine('string', mb::bh(
+            self::COLUMN_OR_TABLE_CHARS . " '\\,.;:?!+-*/^=(){}[]<>`@~#$%&|",
+            mb::ONE_OR_MORE
+        ));
 
-        $machine->addTransition('start', ["'"], "string");
-        $machine->addTransition('string', ["'"], "end");
+        $machine->addTransition('start', ['"'], "string");
+        $machine->addTransition('string', ['"'], "end");
 
         return $machine;
     }
@@ -177,10 +182,10 @@ class SqlParser
         $machine->addEndState("order_desc");
 
         $machine->addMachine('order', mb::s('ORDER BY'));
-        $machine->addMachine(
-            'order_var',
-            mb::bh('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_', mb::ONE_OR_MORE)
-        );
+        $machine->addMachine('order_var', mb::bh(
+            self::COLUMN_OR_TABLE_CHARS,
+            mb::ONE_OR_MORE
+        ));
         $machine->addMachine('order_asc', mb::s('ASC'));
         $machine->addMachine('order_desc', mb::s('DESC'));
 
