@@ -9,20 +9,13 @@
         }
     ],
     "require": {
-        "fmizzell/maquina": "dev-php-81"
+        "fmizzell/maquina": "dev-master"
     },
     "require-dev": {
-        "bugatino/phpcs-git-pre-commit": "dev-master",
-        "phpunit/phpunit": ">=8.3 <8.5 || >8.5.14 <9.5",
+        "phpunit/phpunit": ">9 <10",
         "rector/rector": "^0.15.17",
-        "squizlabs/php_codesniffer": "^3.4"
+        "squizlabs/php_codesniffer": "^3.7"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/paul-m/maquina"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "SqlParser\\": "src/"
@@ -34,12 +27,6 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "sh ./vendor/bugatino/phpcs-git-pre-commit/src/setup.sh"
-        ],
-        "post-update-cmd": [
-            "sh ./vendor/bugatino/phpcs-git-pre-commit/src/setup.sh"
-        ],
         "phpcbf": "./vendor/bin/phpcbf",
         "phpcs": "./vendor/bin/phpcs",
         "rector": "./vendor/bin/rector process",
