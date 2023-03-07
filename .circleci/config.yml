@@ -150,10 +150,25 @@ jobs:
         default: ""
         description: Arguments to `composer update`.
         type: string
-      # TODO: Bring back codeclimate reporting.
     steps:
-      - run-phpunit-tests:
-          install-flags: << parameters.install-flags >>
+      - when:
+          condition:
+            and:
+              - equal: [ "8.1", <<parameters.version>> ]
+              - equal: [ "", <<parameters.install-flags>> ]
+          steps:
+            - run-phpunit-tests:
+                report-to-codeclimate: true
+                install-flags: << parameters.install-flags >>
+      - when:
+          condition:
+            not:
+              and:
+                - equal: [ "8.1", <<parameters.version>> ]
+                - equal: [ "", <<parameters.install-flags>> ]
+          steps:
+            - run-phpunit-tests:
+                install-flags: << parameters.install-flags >>
 
 workflows:
   all-tests:
