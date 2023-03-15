@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=7.4 <8.2",
-        "fmizzell/maquina": "dev-master#e5772c08fd1e6e3de5e5b21f89de20f385ff1adb"
+        "fmizzell/maquina": "^1.1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6",
