@@ -11,9 +11,9 @@ use SqlParser\SqlParser;
 class SqlParserTest extends TestCase
 {
 
-  /**
-   * Data provider.
-   */
+    /**
+     * Data provider.
+     */
     public function dataTestSqlParser()
     {
         return [
@@ -28,29 +28,49 @@ class SqlParserTest extends TestCase
             ["[SELECT * FROM abc][ORDER BY qrs,tuv DESC][LIMIT 1 OFFSET 2];", true],
             ["[SELECT * FROM abc][LIMIT 1 OFFSET 2];", true],
             ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"];", true],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs ASC];", true],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs, tuv];", false],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv DESC];", true],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv][LIMIT 1];", false],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv ASC][LIMIT 1 OFFSET 2];", true],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv ASC][LIMIT 1 OFFSET 2];", true],
-            ["[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv DESC][LIMIT 1 OFFSET 2];", true],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs ASC];",
+                true,
+            ],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs, tuv];",
+                false,
+            ],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv DESC];",
+                true,
+            ],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv][LIMIT 1];",
+                false,
+            ],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv ASC][LIMIT 1 OFFSET 2];",
+                true,
+            ],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv ASC][LIMIT 1 OFFSET 2];",
+                true,
+            ],
+            [
+                "[SELECT * FROM abc][WHERE def = \"hij\" AND klm = \"nop\"][ORDER BY qrs,tuv DESC][LIMIT 1 OFFSET 2];",
+                true,
+            ],
         ];
     }
 
-  /**
-   * Tests validate and everything else.
-   *
-   * @param string $sqlString
-   *   SQL string.
-   * @param bool $expected
-   *   Whether the SQL string is valid or not.
-   *
-   * @dataProvider dataTestSqlParser
-   */
+    /**
+     * Tests validate and everything else.
+     *
+     * @param string $sqlString
+     *   SQL string.
+     * @param bool $expected
+     *   Whether the SQL string is valid or not.
+     *
+     * @dataProvider dataTestSqlParser
+     */
     public function testSqlParser($sqlString, $expected)
     {
-
         $parser = new SqlParser();
 
         $actual = $parser->validate($sqlString);

@@ -13,9 +13,11 @@ use Maquina\StateMachine\IStateMachine;
 class SqlParser
 {
 
-    private $stateMachine;
-    const ALPHANUM = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const COLUMN_OR_TABLE_CHARS = self::ALPHANUM . '_-';
+    private ?IStateMachine $stateMachine = null;
+
+    public const ALPHANUM = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    public const COLUMN_OR_TABLE_CHARS = self::ALPHANUM . '_-';
 
   /**
    * Static call for backward compatibility.

@@ -9,25 +9,29 @@
         }
     ],
     "require": {
-        "fmizzell/maquina": "^1.0.0"
+        "php": ">=7.4 <8.2",
+        "fmizzell/maquina": "^1.1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "rector/rector": "^0.15.17",
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "autoload": {
         "psr-4": {
-            "SqlParser\\": "src/",
-            "SqlParserTest\\": "src/"
+            "SqlParser\\": "src/"
         }
     },
-    "require-dev": {
-        "phpunit/phpunit": "^8.2",
-	"bugatino/phpcs-git-pre-commit": "dev-master",
-        "squizlabs/php_codesniffer": "^3.4"
+    "autoload-dev": {
+        "psr-4": {
+            "SqlParserTest\\": "test/"
+        }
     },
     "scripts": {
-        "post-install-cmd": [
-            "sh ./vendor/bugatino/phpcs-git-pre-commit/src/setup.sh"
-        ],
-        "post-update-cmd": [
-            "sh ./vendor/bugatino/phpcs-git-pre-commit/src/setup.sh"
-        ]
+        "phpcbf": "./vendor/bin/phpcbf",
+        "phpcs": "./vendor/bin/phpcs",
+        "rector": "./vendor/bin/rector process",
+        "rector-dry-run": "./vendor/bin/rector process --dry-run",
+        "test": "./vendor/bin/phpunit --testsuite all"
     }
 }
