@@ -14,7 +14,7 @@ class SqlParserTest extends TestCase
     /**
      * Data provider.
      */
-    public function dataTestSqlParser()
+    public function dataTestSqlParser(): array
     {
         return [
             ['foo', false],
@@ -69,7 +69,7 @@ class SqlParserTest extends TestCase
      *
      * @dataProvider dataTestSqlParser
      */
-    public function testSqlParser($sqlString, $expected)
+    public function testSqlParser(string $sqlString, bool $expected): void
     {
         $parser = new SqlParser();
 

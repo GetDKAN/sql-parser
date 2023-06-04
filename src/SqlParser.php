@@ -58,20 +58,20 @@ class SqlParser
   /**
    * Get the state machine after validating a string.
    */
-    public function getValidatingMachine()
+    public function getValidatingMachine(): ?IStateMachine
     {
         return $this->stateMachine;
     }
 
   /**
-   * Creates the state machine.
-   *
-   * @return \Maquina\StateMachine\IStateMachine
-   *   The machine that will validate the string.
-   *
-   * @static
-   *   Can be called statically.
-   */
+     * Creates the state machine.
+     *
+     * @return IStateMachine
+     *   The machine that will validate the string.
+     *
+     * @static
+     *   Can be called statically.
+     */
     public function getMachine()
     {
 
@@ -220,31 +220,31 @@ class SqlParser
     }
 
   /**
-   * Instantiates a new MachineOfMachine.
-   *
-   * @param string $initialState
-   *   The initial state of the machine.
-   *
-   * @return \Maquina\StateMachine\IStateMachine
-   *   A state machine.
-   */
-    protected function newMachineOfMachine(string $initialState)
+     * Instantiates a new MachineOfMachine.
+     *
+     * @param string $initialState
+     *   The initial state of the machine.
+     *
+     * @return IStateMachine
+     *   A state machine.
+     */
+    protected function newMachineOfMachine(string $initialState): MachineOfMachines
     {
         return new MachineOfMachines([$initialState]);
     }
 
   /**
-   * Feeds the feeder.
-   *
-   * @param string $sql
-   *   An sql statement.
-   * @param \Maquina\StateMachine\IStateMachine $machine
-   *   The machine to feed.
-   *
-   * @throws \Exception
-   *
-   * @codeCoverageIgnore
-   */
+     * Feeds the feeder.
+     *
+     * @param string $sql
+     *   An sql statement.
+     * @param IStateMachine $machine
+     *   The machine to feed.
+     *
+     * @throws \Exception
+     *
+     * @codeCoverageIgnore
+     */
     protected function feedFeeder(string $sql, IStateMachine $machine)
     {
         return Feeder::feed($sql, $machine);
